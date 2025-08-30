@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Place Details</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .place-info {
+      text-align: center;
+      margin-top: 50px;
+    }
+    .place-info img {
+      width: 50%;
+      max-width: 400px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+    }
+    .map-frame {
+      width: 70%;
+      max-width: 600px;
+      height: 330px;
+      border: none;
+      border-radius: 12px;
+    }
+    .map-link {
+      display: inline-block;
+      margin-top: 10px;
+      font-size: 18px;
+      color: #00ccff;
+      text-decoration: none;
+    }
+    .map-link:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="container place-info">
+    <h2 id="placeName"></h2>
+    <img id="placeImage" src="" alt="Place Image">
+    <iframe id="placeMap" class="map-frame" allowfullscreen></iframe>
+    <br />
+    <a id="mapLink" class="map-link" target="_blank">Get Directions ➤</a>
+  </div>
+
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const place = urlParams.get('place');
+
+    document.getElementById("placeName").innerText = place;
+    document.getElementById("placeImage").src = `images/${place.replace(/\s+/g, '_')}.jpg`;
+
+    const mapQuery = encodeURIComponent(place);
+    const embedMapUrl = `https://www.google.com/maps?q=${mapQuery}&output=embed`;
+    const directMapUrl = `https://www.google.com/maps/search/?api=1&query=${mapQuery}`;
+
+    document.getElementById("placeMap").src = embedMapUrl;
+    document.getElementById("mapLink").href = directMapUrl;
+  </script>
+</body>
+</html>
